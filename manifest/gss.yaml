@@ -1,0 +1,29 @@
+apiVersion: game.kruise.io/v1alpha1
+kind: GameServerSet
+metadata:
+  name: veloren
+spec:
+  gameServerTemplate:
+    volumeClaimTemplates:
+    - metadata:
+        name: userdata-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi
+    metadata:
+      labels:
+        game.kruise.io/vke-probe-enabled: "true"
+        game.kruise.io/vke-probe-port: "8080"
+    spec:
+      containers:
+      - image: ai-demo-image-cn-beijing.cr.volces.com/game-images/veloren/server-cli:wrapper-9
+        name: veloren
+        volumeMounts:
+        - mountPath: /opt/userdata
+          name: userdata-volume
+  replicas: 3
+  updateStrategy:
+    rollingUpdate:
+      podUpdatePolicy: InPlaceIfPossible

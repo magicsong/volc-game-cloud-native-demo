@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-server
+  template:
+    metadata:
+      labels:
+        app: auth-server
+    spec:
+      containers:
+      - name: auth-server
+        image: ai-demo-image-cn-beijing.cr.volces.com/game-images/veloren/veloren-auth:wrapper
+        ports:
+        - containerPort: 19253
+        volumeMounts:
+        - name: data-volume
+          mountPath: /opt/veloren-auth/data
+      volumes:
+      - name: data-volume
+        emptyDir: {}
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-server
+spec:
+  selector:
+    app: auth-server
+  ports:
+  - port: 80
+    targetPort: 19253
+  type: LoadBalancer
+
