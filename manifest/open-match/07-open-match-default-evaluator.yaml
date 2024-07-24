@@ -127,7 +127,7 @@ spec:
           - name: om-config-volume-default
             mountPath: /app/config/default
           
-        image: "gcr.io/open-match-public-images/openmatch-default-evaluator:1.8.0"
+        image: "ai-demo-image-cn-beijing.cr.volces.com/game-images/openmatch-default-evaluator:1.8.0"
         ports:
         - name: grpc
           containerPort: 50508
@@ -192,7 +192,7 @@ spec:
           - name: om-config-volume-override
             mountPath: /app/config/override
           
-        image: "gcr.io/open-match-public-images/openmatch-swaggerui:1.8.0"
+        image: "ai-demo-image-cn-beijing.cr.volces.com/game-images/openmatch-swaggerui:1.8.0"
         ports:
         - name: http
           containerPort: 51500
