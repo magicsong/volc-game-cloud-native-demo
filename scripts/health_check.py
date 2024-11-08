@@ -23,7 +23,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     clients_disconnected_total += int(line.split(' ')[1])
             
             if clients_connected is None:
-                raise ValueError('clients_connected metric not found')
+                clients_connected = 0
+            if clients_disconnected_total is None:
+                clients_disconnected_total = 0
 
             # Calculate the actual number of connected clients
             actual_clients = clients_connected - clients_disconnected_total
